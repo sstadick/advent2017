@@ -30,21 +30,26 @@ impl Square {
 fn main() {
     let args: Vec<String> = env::args().collect();
     let input = &args[1];
+    let part = &args[2];
+    let part: i32 = part.trim().parse().unwrap();
     let input: i32 = input.trim().parse().unwrap();
-
-    let mut start = 1;
-    let mut largest = start;
-    while largest < input {
-        largest = start * start;
-        start = start + 2;
+    if part == 1 {
+        let mut start = 1;
+        let mut largest = start;
+        while largest < input {
+            largest = start * start;
+            start = start + 2;
+        }
+        let level = start - 2;
+        let sq = Square {
+            side: level,
+            largest_corner: largest,
+        };
+        let corners = sq.get_corners();
+        let distance = (level - 1) - Square::closest_corner(&input, &corners);
+        println!("Distance: {}", distance);
+    } else {
+        println!("Part two looks hard");
     }
-    let level = start - 2;
-    let sq = Square {
-        side: level,
-        largest_corner: largest,
-    };
-    let corners = sq.get_corners();
-    let distance = (level - 1) - Square::closest_corner(&input, &corners);
-    println!("Distance: {}", distance);
 }
 
